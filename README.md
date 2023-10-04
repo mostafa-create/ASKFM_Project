@@ -18,7 +18,7 @@ The program depend on that each user have an Id so he can use the program to get
 - Logout 
 - Delete my account.
   
-#Notes :
+# Notes :
 -Each user must have a username with no spaces.
 -This program still needs some exceptions handling, my apologies.
 
