@@ -129,6 +129,7 @@ protected:
 	}
 	void print_questions_to_me(ll id) {
 		download_questions();
+		download_Answers();
 		cout << endl;
 		bool isfound = false;
 		for (auto it : Questions) {
@@ -160,6 +161,7 @@ protected:
 	}
 	void print_questions_from_me(ll id) {
 		download_questions();
+		download_Answers();
 		cout << endl;
 		bool ok = false;
 		for (auto it : Questions) {
@@ -250,6 +252,7 @@ protected:
 	}
 	void delete_question(ll id) {
 		download_questions();
+		download_Answers();
 		cout << endl;
 		cout << "Enter Question id that you want to delete: ";
 		ll qid; cin >> qid;
@@ -307,6 +310,8 @@ protected:
 		}
 	}
 	void ask_question(ll id) {
+		download_users();
+		download_questions();
 		cout << endl;
 		cout << "Enter the user id or -1 to cancel: ";
 		ll userid; cin >> userid;
@@ -449,3 +454,5 @@ protected:
 		}
 	}
 };
+
+
