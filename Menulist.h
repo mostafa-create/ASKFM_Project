@@ -12,6 +12,97 @@ protected:
 	vector < Answer > Answers;
 	map < string, ll > mp;
 protected:
+	void download_users() {
+		Users.clear();
+		string line;
+		ll cnt = 0;
+		ifstream outFile;
+		outFile.open("Users.txt");
+		user test;
+		while (getline(outFile, line))
+		{
+			if (cnt % 4 == 0) {
+				test.Username = line;
+				cnt++;
+			}
+			else if (cnt % 4 == 1) {
+				test.Password = line;
+				cnt++;
+			}
+			else if (cnt % 4 == 2) {
+				test.Email = line;
+				cnt++;
+			}
+			else if (cnt % 4 == 3) {
+				test.Id = stoi(line);
+				Users.push_back(test);
+				cnt++;
+			}
+		}
+		outFile.close();
+	}
+	void download_questions() {
+		Questions.clear();
+		ll cnt = 0;
+		string line;
+		ifstream Que_out;
+		Que_out.open("Questions.txt");
+		Question qu;
+		while (getline(Que_out, line))
+		{
+			if (cnt % 5 == 0) {
+				qu.Qs = line;
+				cnt++;
+			}
+			else if (cnt % 5 == 1) {
+				qu.Qid = stoi(line);
+				cnt++;
+			}
+			else if (cnt % 5 == 2) {
+				qu.Anonymous = stoi(line);
+				cnt++;
+			}
+			else if (cnt % 5 == 3) {
+				qu.fromUser = stoi(line);
+				cnt++;
+			}
+			else if (cnt % 5 == 4) {
+				qu.toUser = stoi(line);
+				Questions.push_back(qu);
+				cnt++;
+			}
+		}
+		Que_out.close();
+	}
+	void download_Answers() {
+		Answers.clear();
+		ll cnt = 0;
+		string line;
+		ifstream Ans_out;
+		Ans_out.open("Answers.txt");
+		Answer an;
+		while (getline(Ans_out, line))
+		{
+			if (cnt % 4 == 0) {
+				an.Ans = line;
+				cnt++;
+			}
+			else if (cnt % 4 == 1) {
+				an.fromUser = stoi(line);
+				cnt++;
+			}
+			else if (cnt % 4 == 2) {
+				an.toUser = stoi(line);
+				cnt++;
+			}
+			else if (cnt % 4 == 3) {
+				an.Aid = stoi(line);
+				Answers.push_back(an);
+				cnt++;
+			}
+		}
+		Ans_out.close();
+	}
 	void uploadusers() {
 		fstream uploadUsers;
 		uploadUsers.open("Users.txt", ios::out | ios::trunc);
@@ -37,6 +128,7 @@ protected:
 		uploadque.close();
 	}
 	void print_questions_to_me(ll id) {
+		download_questions();
 		cout << endl;
 		bool isfound = false;
 		for (auto it : Questions) {
@@ -67,6 +159,7 @@ protected:
 		}
 	}
 	void print_questions_from_me(ll id) {
+		download_questions();
 		cout << endl;
 		bool ok = false;
 		for (auto it : Questions) {
@@ -97,6 +190,8 @@ protected:
 		}
 	}
 	void answer_question(ll id) {
+		download_questions();
+		download_Answers();
 		cout << endl;
 		cout << "Enter Question id or -1 to cancel: ";
 		ll i, x; cin >> i;
@@ -154,6 +249,7 @@ protected:
 		}
 	}
 	void delete_question(ll id) {
+		download_questions();
 		cout << endl;
 		cout << "Enter Question id that you want to delete: ";
 		ll qid; cin >> qid;
@@ -189,6 +285,7 @@ protected:
 		}
 	}
 	void delete_Answer(ll id) {
+		download_Answers();
 		cout << endl;
 		cout << "Enter Question id that you want to delete it's answer: ";
 		ll qid; cin >> qid;
@@ -294,6 +391,7 @@ protected:
 		}
 	}
 	void users_list() {
+		download_users();
 		cout << endl;
 		ll c = 1;
 		for (auto it : Users) {
@@ -304,6 +402,8 @@ protected:
 		}
 	}
 	void feed(ll id) {
+		download_questions();
+		download_Answers();
 		cout << endl;
 		for (auto it : Questions) {
 			bool isfound = false;
@@ -328,6 +428,7 @@ protected:
 		return;
 	}
 	bool delete_account(ll id) {
+		download_users();
 		cout << "Are you sure you want to delete your account (y/n) ? ";
 		char c; cin >> c;
 		ll i = 0;
@@ -348,5 +449,3 @@ protected:
 		}
 	}
 };
-
-
